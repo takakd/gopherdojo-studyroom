@@ -12,6 +12,7 @@ mainパッケージ分離 | imgconvモジュールに変換処理を分離
 ユーザー定義型を使う | imgconv.goで`ImageFormat`を使用
 GoDoc生成 | `godoc -http=:8080` で`http://localhost:8080/pkg/?m=all`に列挙されていることを確認
 Go Modulesを使ってみる | `go mod init`後、`go get ...`で`go.mod`, `go.sum`に列挙されることを確認（※）
+
 ※処理で利用するものが無かったので後に中身をクリア。
 
 ## Usage
