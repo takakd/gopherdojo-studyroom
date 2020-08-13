@@ -40,6 +40,60 @@ $ kadai1 -srcfmt png -dstfmt jpg /somewhere/images
 * go version go1.14.4 darwin/amd64
 * macOS 10.15.5
 
+## 動作確認方法
+
+```shell
+$ tree internal/imgconv/testdata 
+internal/imgconv/testdata
+├── gif
+│   ├── sample.gif
+│   └── sub
+│       └── sample.gif
+├── jpg
+│   ├── sample.jpg
+│   └── sub
+│       └── sample.jpg
+└── png
+    ├── error.png
+    ├── sample.png
+    └── sub
+        └── sample.png
+
+6 directories, 7 files
+
+$ file internal/imgconv/testdata/gif/sample.gif 
+internal/imgconv/testdata/gif/sample.gif: GIF image data, version 87a, 400 x 400
+
+$ make build
+==> Formatting...
+==> Building...
+$ cmd/kadai1/kadai1 -srcfmt gif -dstfmt png internal/imgconv/testdata
+2020/08/14 07:47:31 done.
+
+$ tree internal/imgconv/testdata                                     
+internal/imgconv/testdata
+├── gif
+│   ├── sample.gif
+│   ├── sample.png
+│   └── sub
+│       ├── sample.gif
+│       └── sample.png
+├── jpg
+│   ├── sample.jpg
+│   └── sub
+│       └── sample.jpg
+└── png
+    ├── error.png
+    ├── sample.png
+    └── sub
+        └── sample.png
+
+6 directories, 9 files
+
+$ file internal/imgconv/testdata/gif/sample.png                     
+internal/imgconv/testdata/gif/sample.png: PNG image data, 400 x 400, 8-bit colormap, non-interlaced
+```
+
 ## 実行方法
 
 ビルド
