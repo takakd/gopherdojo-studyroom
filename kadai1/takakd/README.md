@@ -3,6 +3,17 @@
 [Gopher道場 自習室](https://gopherdojo.org/studyroom/)の`【TRY】画像変換コマンドを作ろう`の実装です。  
 ディレクトリ配下の画像ファイルを変換します。
 
+## 課題の回答について
+
+要件 | 対応方法
+--- | ---
+mainパッケージ分離 | imgconvモジュールに変換処理を分離
+自作・標準・準標準パッケージのみ使用 | その通りにした
+ユーザー定義型を使う | imgconv.goで`ImageFormat`を使用
+GoDoc生成 | `godoc -http=:8080` で`http://localhost:8080/pkg/?m=all`に列挙されていることを確認
+Go Modulesを使ってみる | `go mod init`後、`go get ...`で`go.mod`, `go.sum`に列挙されることを確認（※）
+※処理で利用するものが無かったので後に中身をクリア。
+
 ## Usage
 
 ```shell
