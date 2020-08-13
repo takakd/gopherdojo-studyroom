@@ -17,7 +17,7 @@ func init() {
 	convertTo = flag.String("dstfmt", "png", `input image format, support "jpg", "png", and "gif"`)
 	flag.Parse()
 
-	if len(os.Args) < 2 {
+	if len(flag.Args()) < 1 {
 		usage := `
 Usage: kadai1 [-srcfmt format] [-dstfmt format] directory_path
 `
@@ -28,7 +28,7 @@ Usage: kadai1 [-srcfmt format] [-dstfmt format] directory_path
 		os.Exit(0)
 	}
 
-	dirname = os.Args[1]
+	dirname = flag.Args()[0]
 }
 
 func main() {
