@@ -1,0 +1,86 @@
+# 課題1 - Gopher道場 自習室
+
+[Gopher道場 自習室](https://gopherdojo.org/studyroom/)の`【TRY】画像変換コマンドを作ろう`の実装です。  
+ディレクトリ配下の画像ファイルを変換します。
+
+## Usage
+
+```shell
+./cmd/kadai1/kadai1 [-srcfmt format] [-dstfmt format] directory_path
+
+  -dstfmt string
+        入力画像のフォーマット, "jpg", "png", "gif"のいずれかを指定。
+  -srcfmt string
+        出力する画像のフォーマット, "jpg", "png", "gif"のいずれかを指定。
+        
+  directory_path
+        変換する画像を含むディレクトリのフルパス
+```
+        
+e.g. /somewhere/images内のpngファイルをjpgに変換
+
+```shell
+$ kadai1 -srcfmt png -dstfmt jpg /somewhere/images
+```
+
+## 環境
+
+* go version go1.14.4 darwin/amd64
+* macOS 10.15.5
+
+## 実行方法
+
+ビルド
+
+```shell
+$ make build
+# -> ./cmd/kadai1/kadai1に実行バイナリが生成されます。
+```
+
+テスト
+
+```shell
+$ make test
+```
+
+他
+
+```shell
+# コードフォーマット
+$ make fmt
+
+# godoc
+$ make godoc
+
+# gosec
+$ make gosec
+```
+
+## ファイル構成
+
+```shell
+./
+├── Makefile
+├── README.md
+├── cmd
+│   └── kadai1          mainモジュール
+│       ├── kadai1      実行ファイル
+│       └── main.go     main
+├── go.mod
+└── internal
+    ├── imgconv                 画像変換モジュール
+    │   ├── fileutil.go         ディレクトリ単位の画像変換処理
+    │   ├── fileutil_test.go
+    │   ├── imgconv.go          画像変換処理
+    │   └── imgconv_test.go
+    └── testdata    テストデータ
+        ├── gif
+        │   ├── sample.gif
+        │   └── ...
+        ├── jpg
+        │   ├── sample.jpg
+        │   └── ...
+        └── png
+            ├── sample.png
+            └── ...
+```
