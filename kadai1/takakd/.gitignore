@@ -1,0 +1,7 @@
+internal/imgconv/testdata/gif/*.png
+internal/imgconv/testdata/gif/*.jpg
+internal/imgconv/testdata/png/*.gif
+internal/imgconv/testdata/png/*.jpg
+internal/imgconv/testdata/jpg/*.gif
+internal/imgconv/testdata/jpg/*.png
+cmd/kadai1/kadai1
