@@ -27,7 +27,7 @@ func TestConvertImage(t *testing.T) {
 		{name: "jpg-gif", opt: &ConvertImageOption{SrcFormat: "jpg", DstFormat: "gif", DstDirPath: outputTestDataDir}},
 		{name: "jpg-png", opt: &ConvertImageOption{SrcFormat: "jpg", DstFormat: "png", DstDirPath: outputTestDataDir}},
 	}
-	for i, _ := range tests {
+	for i := range tests {
 		tests[i].srcPath = filepath.Join(testdataDir, "/", string(tests[i].opt.SrcFormat), "sample."+string(tests[i].opt.SrcFormat))
 		tests[i].dstPath = buildDstFilepath(tests[i].srcPath, outputTestDataDir, string(tests[i].opt.DstFormat))
 	}

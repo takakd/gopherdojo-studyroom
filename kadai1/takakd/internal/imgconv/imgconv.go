@@ -15,13 +15,13 @@ import (
 )
 
 // Supported image type
-const (
-	PNG = "png"
-	GIF = "gif"
-	JPG = "jpg"
-)
-
 type ImageFormat string
+
+const (
+	PNG ImageFormat = "png"
+	GIF ImageFormat = "gif"
+	JPG ImageFormat = "jpg"
+)
 
 // Get file extension.
 func (f *ImageFormat) ext() string {
@@ -68,7 +68,7 @@ func ConvertImage(srcPath, dstDirPath string, srcFormat ImageFormat, dstFormat I
 	}
 
 	if !srcFormat.isCorrectExt(srcPath) {
-		return errors.New(fmt.Sprintf("file does not match format. path=%s, format=%s", srcPath, srcFormat))
+		return fmt.Errorf("file does not match format. path=%s, format=%s", srcPath, srcFormat)
 	}
 
 	img, err := decodeImage(srcPath, srcFormat)
@@ -81,7 +81,7 @@ func ConvertImage(srcPath, dstDirPath string, srcFormat ImageFormat, dstFormat I
 		return errors.New(fmt.Sprintf("failed to create directory. path=%s", filepath.Dir(srcPath)))
 	}
 
-	if err = encodeImage(dstPath, img, dstFormat); err != nil {
+	if err := encodeImage(dstPath, img, dstFormat); err != nil {
 		return err
 	}
 
