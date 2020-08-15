@@ -39,7 +39,7 @@ func TestConvertImageInDirectory(t *testing.T) {
 				if !f.IsDir() {
 					return nil
 				}
-				if test.opt.SrcFormat.isCorrectExt(path) && test.opt.SrcFormat.isValidFile(path) {
+				if test.opt.SrcFormat.isCorrectExt(path) && isValidFile(path, test.opt.SrcFormat) {
 					srcCount += 1
 				}
 				return nil
@@ -51,7 +51,7 @@ func TestConvertImageInDirectory(t *testing.T) {
 				if !f.IsDir() {
 					return nil
 				}
-				if test.opt.DstFormat.isCorrectExt(path) && test.opt.DstFormat.isValidFile(path) {
+				if test.opt.DstFormat.isCorrectExt(path) && isValidFile(path, test.opt.DstFormat) {
 					dstCount += 1
 					dstFilePathList = append(dstFilePathList, path)
 				}

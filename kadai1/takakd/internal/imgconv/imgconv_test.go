@@ -2,6 +2,9 @@ package imgconv
 
 import (
 	"fmt"
+	"image/gif"
+	"image/jpeg"
+	"image/png"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -33,7 +36,9 @@ func TestConvertImage(t *testing.T) {
 	}
 
 	cleanup := func() {
-		os.RemoveAll(outputTestDataDir)
+		if removeErr := os.RemoveAll(outputTestDataDir); removeErr != nil {
+			t.Errorf("failed to delete files. dir=%s", outputTestDataDir)
+		}
 	}
 	cleanup()
 
@@ -50,7 +55,7 @@ func TestConvertImage(t *testing.T) {
 				return
 			}
 
-			convertSucceeded := test.opt.DstFormat.isValidFile(test.dstPath)
+			convertSucceeded := isValidFile(test.dstPath, test.opt.DstFormat)
 			if !convertSucceeded {
 				t.Error(fmt.Sprintf("failed to convert. path=%s", test.dstPath))
 				return
@@ -62,4 +67,22 @@ func TestConvertImage(t *testing.T) {
 
 	// Clean up
 	cleanup()
+}
+
+func isValidFile(srcFilePath string, f ImageFormat) bool {
+	srcFile, err := os.OpenFile(srcFilePath, os.O_RDONLY, 0600)
+	if err != nil {
+		return false
+	}
+
+	if f == PNG {
+		_, err = png.Decode(srcFile)
+	} else if f == GIF {
+		_, err = gif.Decode(srcFile)
+	} else if f == JPG {
+		_, err = jpeg.Decode(srcFile)
+	}
+
+	valid := err == nil
+	return valid
 }

@@ -42,24 +42,6 @@ func (f *ImageFormat) isCorrectExt(srcFilePath string) bool {
 	return correct
 }
 
-func (f *ImageFormat) isValidFile(srcFilePath string) bool {
-	srcFile, err := os.OpenFile(srcFilePath, os.O_RDONLY, 0600)
-	if err != nil {
-		return false
-	}
-
-	if *f == PNG {
-		_, err = png.Decode(srcFile)
-	} else if *f == GIF {
-		_, err = gif.Decode(srcFile)
-	} else if *f == JPG {
-		_, err = jpeg.Decode(srcFile)
-	}
-
-	valid := err == nil
-	return valid
-}
-
 // Convert image file.
 func ConvertImage(srcPath, dstDirPath string, srcFormat ImageFormat, dstFormat ImageFormat) error {
 	if srcFormat == dstFormat {
@@ -115,11 +97,12 @@ func decodeImage(filename string, format ImageFormat) (image.Image, error) {
 	}
 
 	var img image.Image
-	if format == PNG {
+	switch format {
+	case PNG:
 		img, err = png.Decode(srcFile)
-	} else if format == GIF {
+	case GIF:
 		img, err = gif.Decode(srcFile)
-	} else if format == JPG {
+	case JPG:
 		img, err = jpeg.Decode(srcFile)
 	}
 	if err != nil {
@@ -130,26 +113,23 @@ func decodeImage(filename string, format ImageFormat) (image.Image, error) {
 }
 
 func encodeImage(filename string, img image.Image, format ImageFormat) error {
-	var dstFile *os.File
-
-	defer func() {
-		if dstFile != nil {
-			if err := dstFile.Close(); err != nil {
-				log.Printf("could not close file. name=%s\n", dstFile.Name())
-			}
-		}
-	}()
-
 	dstFile, err := os.Create(filename)
 	if err != nil {
 		return err
 	}
 
-	if format == PNG {
+	defer func() {
+		if closeErr := dstFile.Close(); closeErr != nil {
+			log.Printf("could not close file. name=%s\n", dstFile.Name())
+		}
+	}()
+
+	switch format {
+	case PNG:
 		err = png.Encode(dstFile, img)
-	} else if format == GIF {
+	case GIF:
 		err = gif.Encode(dstFile, img, nil)
-	} else if format == JPG {
+	case JPG:
 		err = jpeg.Encode(dstFile, img, nil)
 	}
 	if err != nil {
