@@ -40,7 +40,7 @@ func TestConvertImageInDirectory(t *testing.T) {
 					return nil
 				}
 				if test.opt.SrcFormat.isCorrectExt(path) && isValidFile(path, test.opt.SrcFormat) {
-					srcCount += 1
+					srcCount++
 				}
 				return nil
 			})
